@@ -1,4 +1,4 @@
-from typing import Text
+import string
 import pandas as pd
 from TextPreprocessing import TextPreprocessing
 
@@ -20,6 +20,6 @@ df = pd.read_csv('train.csv', encoding='latin-1') # Text feature/column name is 
 
 
 ''' Instruction #4 in the project proposal, text preprocessing. Give dataframe along with 
-    the feature/column name s'''
+    the feature/column name. '''
 tp = TextPreprocessing(df, 'question_text')
 print(tp.GetDataFrame().head())
