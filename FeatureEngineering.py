@@ -11,7 +11,7 @@ import nltk
 
 class FeatureEngineering:
     #just pass dataframe so that entire class can work on it
-    def __init__(self , df) -> None:
+    def __init__(self , df):
         self.df = df
 
     '''
