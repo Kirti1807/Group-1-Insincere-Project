@@ -13,8 +13,8 @@ from sklearn.ensemble import  RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import RandomizedSearchCV
 
-import xgboost as xgb
-from xgboost import XGBClassifier
+# import xgboost as xgb
+# from xgboost import XGBClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 class ModelTraining:

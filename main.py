@@ -1,5 +1,8 @@
+from matplotlib.pyplot import text
 import pandas as pd
 from TextPreprocessing import TextPreprocessing
+from DataAnalysis import DataAnalysis
+
 
 '''  
 
@@ -15,9 +18,11 @@ the changed files!
 
 '''
 
-df = pd.read_csv('train.csv', encoding='latin-1') # Text feature/column name is 'question_text'
+# The real file with a million plus rows is called 'train.csv', but 'customData.csv' is placed in for quick testing.
+df = pd.read_csv('customData.csv', encoding='latin-1') # Text feature/column name is 'question_text'
 
 ''' Instruction #4 in the project proposal, text preprocessing. Give dataframe along with 
-    the feature/column name. '''
-tp = TextPreprocessing(df, 'question_text')
-print(tp.GetDataFrame().head())
+    the feature/column name. Below will be all the classes to process the text. '''
+    
+# tp = TextPreprocessing(df, 'question_text')
+# print(tp.GetDataFrame().head())
