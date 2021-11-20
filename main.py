@@ -1,4 +1,3 @@
-import string
 import pandas as pd
 from TextPreprocessing import TextPreprocessing
 
@@ -17,7 +16,6 @@ the changed files!
 '''
 
 df = pd.read_csv('train.csv', encoding='latin-1') # Text feature/column name is 'question_text'
-
 
 ''' Instruction #4 in the project proposal, text preprocessing. Give dataframe along with 
     the feature/column name. '''
