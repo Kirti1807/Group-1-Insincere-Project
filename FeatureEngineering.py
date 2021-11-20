@@ -1,9 +1,6 @@
 ''' 
-
 https://docs.google.com/document/d/1ep6Ki92F81lRiojOdqv5otBdDlfY6ZWcqjVsQc0LVjg/edit 
-
 3rd bullet point in project proposal file, which mentions pre processing for the text.
-
 '''
 
 from numpy import vectorize
@@ -125,5 +122,3 @@ class FeatureEngineering:
 
         # returning final training and testing data set
         return Final_Training_data , Final_Test
-
-
