@@ -77,7 +77,7 @@ class FeatureEngineering:
 
         # Creating dataframe from vector ID's 
         extracted_data = pd.DataFrame(extracted_data)
-        print(extracted_data.head())
+        # print(extracted_data.head())
 
         # Assign the column name to the features
         extracted_data.columns = vectorizer.get_feature_names()
@@ -89,7 +89,7 @@ class FeatureEngineering:
 
 
         Modified_df = extracted_data.copy()
-        print(Modified_df.shape)
+        # print(Modified_df.shape)
         # print(Modified_df.head())
 
         # Reset the index of new training data or old training set and then concatinate both of them
@@ -100,7 +100,7 @@ class FeatureEngineering:
         Final_Training_data = pd.concat([x_train, Modified_df], axis=1)
 
         Final_Training_data.head()
-        print(Final_Training_data.shape)
+        # print(Final_Training_data.shape)
 
         # Remove the question_text column from final data set
         Final_Training_data.drop(["question_text"], axis=1, inplace=True)

@@ -4,6 +4,7 @@ import pandas as pd
 from TextPreprocessing import TextPreprocessing
 from DataAnalysis import DataAnalysis
 from FeatureEngineering import FeatureEngineering
+from model_training import ModelTraining
 
 
 '''  
@@ -45,8 +46,8 @@ Step 1 - Data Analysis. (Highlight the portion of code below and Use Ctrl + / to
 Step 2 - Text Preprocessing. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
 
 '''
-# tp = TextPreprocessing(df, 'question_text')
-# df = tp.GetDataFrame()
+tp = TextPreprocessing(df, 'question_text')
+df = tp.GetDataFrame()
 
 
 
@@ -58,20 +59,14 @@ Step 2 - Text Preprocessing. (Highlight the portion of code below and Use Ctrl +
 Step 3 - Feature Engineering. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
 
 '''
-# fe = FeatureEngineering(df)
-# newDf = fe.add_more_features(df)
+fe = FeatureEngineering(df)
+df = fe.add_more_features(df)
 
-# # Shuffle the dataframe.
-# newDf = newDf.sample(frac=1, random_state=42).reset_index(drop=True)
-# print(newDf.head())
-# # Split into train and test sets.
-# x_train = newDf[:3500]
-# x_test = newDf[3500:]
-# # Extract features with class functions now.
-# x_train, x_test = fe.extract_features(x_train, x_test)
-# print(x_train)
-# print('\n\n')
-# print(x_test)
+# Shuffle the dataframe.
+df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+
+# Extract features with class functions now. Train and test sets are passed with slicing.
+x_train, x_test = fe.extract_features(df[:3500], df[3500:])
 
 
 
@@ -80,3 +75,9 @@ Step 3 - Feature Engineering. (Highlight the portion of code below and Use Ctrl 
 Step 4 - Model training. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
 
 '''
+df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+
+# Get the training samples ready, instantiate the class as well.
+mt = ModelTraining(x_train, x_test)
+
+logR = mt.logistic()
