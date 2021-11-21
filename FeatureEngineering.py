@@ -53,6 +53,18 @@ class FeatureEngineering:
         return df_copy
 
 
+    ''' Function updates (from Omar):
+
+        1) to_csv - Final_Training_data.to_csv("Final_Training_vectorized", index=False)
+                    Final_Test.to_csv("Final_Test_vectorized", index=False)
+        
+                No need to save these to a csv, they're incredibly huge files with data that'll only be used
+                    during the code being ran.
+
+        2) .head() - A few times a dataframe had .head() function called, that's usually used with print to
+                SEE the data in the head. However there was no print statement around it.
+    
+    '''
     # This function extracting features by using TF-IDF vector
     def extract_features(self , x_train , x_test):
         #initilize the tf-idf vector
@@ -65,7 +77,7 @@ class FeatureEngineering:
 
         # Creating dataframe from vector ID's 
         extracted_data = pd.DataFrame(extracted_data)
-        extracted_data.head()
+        print(extracted_data.head())
 
         # Assign the column name to the features
         extracted_data.columns = vectorizer.get_feature_names()
@@ -78,7 +90,7 @@ class FeatureEngineering:
 
         Modified_df = extracted_data.copy()
         print(Modified_df.shape)
-        Modified_df.head()
+        # print(Modified_df.head())
 
         # Reset the index of new training data or old training set and then concatinate both of them
         Modified_df.reset_index(drop=True, inplace=True)
@@ -92,10 +104,7 @@ class FeatureEngineering:
 
         # Remove the question_text column from final data set
         Final_Training_data.drop(["question_text"], axis=1, inplace=True)
-        Final_Training_data.head()
-
-        # storing the final training data set into new csv file
-        Final_Training_data.to_csv("Final_Training_vectorized", index=False)
+        # print(Final_Training_data.head())
 
         # vectorizing the test data set
         dff_test = list(vectorizer.transform(x_test["question_text"]).toarray())
@@ -116,9 +125,6 @@ class FeatureEngineering:
 
         # Remove the question_text column fronm finale testing data 
         Final_Test.drop(["question_text"], axis=1, inplace=True)
-
-        # Storing the fianl testing test into new csv file
-        Final_Test.to_csv("Final_Test_vectorized", index=False)
 
         # returning final training and testing data set
         return Final_Training_data , Final_Test

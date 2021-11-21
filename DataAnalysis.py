@@ -97,7 +97,7 @@ class DataAnalysis:
     labels is printing the two labesl we have
     
     """
-    def visualize_data(self, show_word_cloud_with_labels = False):
+    def visualize_data(self):
         self.m_len_sincere = self.m_df["target"].value_counts()
         self.m_len_no_sincere = self.m_df["target"].value_counts()
         aray_labels = np.array(self.m_len_sincere, self.m_len_no_sincere)
@@ -133,8 +133,6 @@ class DataAnalysis:
 
         3) stopwords - They were imported in a previous line, outside the class in the old implementation.
             But even doing so, no language (english, spanish, etc) was specified.
-
-        4) 
     '''
     def plot_wordcloud(self, mask=None, max_words=200, max_font_size=100, figure_size=(24.0,16.0), title = None, title_size=40):
         from nltk.corpus import stopwords
