@@ -1,5 +1,11 @@
+from typing import Text
 import pandas as pd
+
 from TextPreprocessing import TextPreprocessing
+from DataAnalysis import DataAnalysis
+from FeatureEngineering import FeatureEngineering
+from model_training import ModelTraining
+
 
 '''  
 
@@ -15,9 +21,63 @@ the changed files!
 
 '''
 
-df = pd.read_csv('train.csv', encoding='latin-1') # Text feature/column name is 'question_text'
 
-''' Instruction #4 in the project proposal, text preprocessing. Give dataframe along with 
-    the feature/column name. '''
+
+''' The real file with a million plus rows is called 'train.csv', but 'customData.csv' is placed in for quick testing.
+    Text feature/column name is 'question_text'. '''
+df = pd.read_csv('customData.csv', encoding='latin-1') 
+
+
+
+'''
+
+Step 1 - Data Analysis. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
+
+'''
+# da = DataAnalysis()
+# da.explore_dataset(True)
+# da.plot_wordcloud()
+
+
+
+
+'''
+
+Step 2 - Text Preprocessing. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
+
+'''
 tp = TextPreprocessing(df, 'question_text')
-print(tp.GetDataFrame().head())
+df = tp.GetDataFrame()
+
+
+
+
+
+
+'''
+
+Step 3 - Feature Engineering. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
+
+'''
+fe = FeatureEngineering(df)
+df = fe.add_more_features(df)
+
+# Shuffle the dataframe.
+df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+
+# Extract features with class functions now. Train and test sets are passed with slicing.
+x_train, x_test = fe.extract_features(df[:3500], df[3500:])
+
+
+
+'''
+
+Step 4 - Model training. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
+
+'''
+df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+
+# Get the training samples ready, instantiate the class as well.
+mt = ModelTraining(x_train, x_test)
+
+logR = mt.logistic()
