@@ -75,18 +75,15 @@ class FeatureEngineering:
             vectorizer.fit_transform(x_train['question_text']).toarray()
         )
 
-        # Creating dataframe from vector ID's 
-        extracted_data = pd.DataFrame(extracted_data)
-        # print(extracted_data.head())
+        
 
-        # Assign the column name to the features
-        extracted_data.columns = vectorizer.get_feature_names()
-
-
-        vocab = vectorizer.vocabulary_
+        # we extracting column name by vocabulary keys
+        vocab_train = vectorizer.vocabulary_
         mapping = vectorizer.get_feature_names()
-        keys = list(vocab.keys())
+        keys_train = list(vocab_train.keys())
 
+        # creat dataframe by vectrozer array and assign it column name 
+        extracted_data = pd.DataFrame(extracted_data , columns=keys_train)
 
         Modified_df = extracted_data.copy()
         # print(Modified_df.shape)
