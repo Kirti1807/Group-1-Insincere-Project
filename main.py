@@ -5,6 +5,7 @@ from TextPreprocessing import TextPreprocessing
 from DataAnalysis import DataAnalysis
 from FeatureEngineering import FeatureEngineering
 from model_training import ModelTraining
+from sklearn.model_selection import train_test_split
 
 
 '''  
@@ -62,22 +63,34 @@ Step 3 - Feature Engineering. (Highlight the portion of code below and Use Ctrl 
 fe = FeatureEngineering(df)
 df = fe.add_more_features(df)
 
-# Shuffle the dataframe.
-df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+# remove qid column and split the df into X , Y
+df = df.drop('qid' , axis=1)
+X = df.drop('target' , axis=1)
+Y = df['target']
+
+# spliting the X , Y in training and testing set
+x_train , x_test , y_train , y_test = train_test_split(X , Y , test_size=0.2 , random_state=1)
 
 # Extract features with class functions now. Train and test sets are passed with slicing.
-x_train, x_test = fe.extract_features(df[:3500], df[3500:])
+x_train_fe, x_test_fe = fe.extract_features(x_train , x_test)
+
+# print(x_train_fe.head())
+# print(x_test_fe.head())
 
 
+
+
+
+# print(x_train_fe.shape , x_test_fe.shape , y_train.shape , y_test.shape)
 
 '''
 
 Step 4 - Model training. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
 
 '''
-df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+
 
 # Get the training samples ready, instantiate the class as well.
-mt = ModelTraining(x_train, x_test)
+mt = ModelTraining(x_train_fe, y_train)
 
 logR = mt.logistic()
