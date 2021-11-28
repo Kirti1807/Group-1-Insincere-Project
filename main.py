@@ -6,8 +6,8 @@ from DataAnalysis import DataAnalysis
 from FeatureEngineering import FeatureEngineering
 from model_training import ModelTraining
 from sklearn.model_selection import train_test_split
-
-
+from PrepareData import DataPrepration
+from evaluate import EvaluateModel
 '''  
 
 Group 1 Insinscere project!
@@ -28,60 +28,12 @@ the changed files!
     Text feature/column name is 'question_text'. '''
 df = pd.read_csv('customData.csv', encoding='latin-1') 
 
-
-
 '''
-
-Step 1 - Data Analysis. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
-
+    all data preprocessing and feature engineering done in DataPrepration class and return finale training and testing dat
 '''
-# da = DataAnalysis()
-# da.explore_dataset(True)
-# da.plot_wordcloud()
+dp = DataPrepration(df)
 
-
-
-
-'''
-
-Step 2 - Text Preprocessing. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
-
-'''
-tp = TextPreprocessing(df, 'question_text')
-df = tp.GetDataFrame()
-
-
-
-
-
-
-'''
-
-Step 3 - Feature Engineering. (Highlight the portion of code below and Use Ctrl + / to uncomment it and see results.)
-
-'''
-fe = FeatureEngineering(df)
-df = fe.add_more_features(df)
-
-# remove qid column and split the df into X , Y
-df = df.drop('qid' , axis=1)
-X = df.drop('target' , axis=1)
-Y = df['target']
-
-# spliting the X , Y in training and testing set
-x_train , x_test , y_train , y_test = train_test_split(X , Y , test_size=0.2 , random_state=1)
-
-# Extract features with class functions now. Train and test sets are passed with slicing.
-x_train_fe, x_test_fe = fe.extract_features(x_train , x_test)
-
-# print(x_train_fe.head())
-# print(x_test_fe.head())
-
-
-
-
-
-# print(x_train_fe.shape , x_test_fe.shape , y_train.shape , y_test.shape)
+x_train , x_test , y_train , y_test = dp.data_prepration(df)
 
 '''
 
@@ -91,6 +43,13 @@ Step 4 - Model training. (Highlight the portion of code below and Use Ctrl + / t
 
 
 # Get the training samples ready, instantiate the class as well.
-mt = ModelTraining(x_train_fe, y_train)
-
-logR = mt.logistic()
+mt = ModelTraining(x_train, y_train)
+# ============================================ XGboost Model =========================================
+XGboostModel = mt.Xgboost_model(fine_tuning=False)
+predict = XGboostModel.predict(x_test)
+# check the unique values in predict
+# ============================================ XGboost Model =========================================
+evaluate = EvaluateModel(x_test, y_test, XGboostModel)
+evaluate.evaluate_model()
+evaluate.plot_confusion_matrix(y_test, XGboostModel.predict(x_test))
+evaluate.plot_roc_curve(y_test, XGboostModel.predict_proba(x_test)[: , 1])
