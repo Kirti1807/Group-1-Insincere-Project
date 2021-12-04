@@ -76,7 +76,7 @@ class ModelTraining:
                 verbosity=None,
             )
             xgb.fit(self.x_train, self.y_train)
-            print("Completed training the model")
+            print("Completed training the XgBoost model")
             return xgb
 
 
@@ -99,15 +99,15 @@ class ModelTraining:
         else:
             print("starting to train the model")
             svm = SVC(C=1, kernel='rbf', degree=3, gamma='auto', coef0=0.0, 
-                    shrinking=True, probability=False, tol=0.001, cache_size=200,
+                    shrinking=True, probability=True, tol=0.001, cache_size=200,
                     class_weight=None, verbose=False, max_iter=-1, decision_function_shape='ovr', 
                     break_ties=False, random_state=None)
 
             svm.fit(self.x_train, self.y_train)
-            print("Trainign completed")
+            print("Completed training the SVM model")
             return svm
 
-        # Naive bayes model    
+    # Naive bayes model    
     def Naive_bayes(self):
         print("Training Naive Bayes")
         nb = MultinomialNB()
